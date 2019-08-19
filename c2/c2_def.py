@@ -1,6 +1,13 @@
 import pandas as pd
 from sklearn.model_selection import StratifiedShuffleSplit
-from sklearn.preprocessing import Imputer, LabelBinarizer
+from sklearn.preprocessing import LabelBinarizer
+from sklearn.impute import SimpleImputer as Imputer
+
+def load_housing_data():
+    '''Load data form housing.csv in datasets folder
+        no variable required csv_path Hardcoded'''
+    csv_path="../datasets/housing/housing.csv"
+    return pd.read_csv(csv_path)
 
 def create_train_set(df):
     '''get test and train set for the data Frame
@@ -13,14 +20,8 @@ def create_train_set(df):
             set_.drop("income_cat", axis=1, inplace=True)
         return strain_train_set, strain_test_set
 
-def load_housing_data():
-    '''Load data form housing.csv in datasets folder
-        no variable required csv_path Hardcoded'''
-    csv_path="../datasets/housing/housing.csv"
-    return pd.read_csv(csv_path)
-
 def data_cleaning(df):
-    
+
     #Data Cleaning for numbers
     imputer = Imputer(strategy="median")
     dfn = df.drop("ocean_proximity", axis=1)
@@ -32,3 +33,4 @@ def data_cleaning(df):
     Xt = encoder.fit_transform(df["ocean_proximity"])
 
     return imputer.statistics_,Xn,Xt
+
